@@ -54,7 +54,7 @@ class AnimeControllerIT {
     private static final DevDojoUser ADMIN = DevDojoUser.builder()
             .name("Lucas Sosa")
             .password("")
-            .username("william")
+            .username("lucas")
             .authorities("ROLE_USER,ROLE_ADMIN")
             .build();
 
@@ -73,7 +73,7 @@ class AnimeControllerIT {
         public TestRestTemplate testRestTemplateRoleAdminCreator(@Value("${local.server.port}") int port) {
             RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder()
                     .rootUri("http://localhost:" + port)
-                    .basicAuthentication("william", "academy");
+                    .basicAuthentication("lucas", "academy");
             return new TestRestTemplate(restTemplateBuilder);
         }
     }
