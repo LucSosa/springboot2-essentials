@@ -18,6 +18,11 @@
         <org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <springdoc-openapi-ui.version>1.6.9</springdoc-openapi-ui.version>
+        <jib-maven-plugin.version>3.2.1</jib-maven-plugin.version>
+        <docker.distroless.image>gcr.io/distroless/java:11</docker.distroless.image>
+        <docker.repo.url>registry.hub.docker.com/lucassosa</docker.repo.url>
+        <docker.repo.project>springboot2-essentials</docker.repo.project>
+        <docker.image.name>${docker.repo.url}/${docker.repo.project}</docker.image.name>
     </properties>
 
     <dependencies>
@@ -66,6 +71,16 @@
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-security</artifactId>
             <version>${springdoc-openapi-ui.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
 
         <dependency>
@@ -119,6 +134,25 @@
     </profiles>
     <build>
         <plugins>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>${jib-maven-plugin.version}</version>
+                <configuration>
+                    <from>
+                        <image>${docker.distroless.image}</image>
+                        <tags>
+                            <tag>${project.version}</tag>
+                        </tags>
+                    </from>
+                    <to>
+                        <image>${docker.image.name}</image>
+                    </to>
+                    <container>
+                        <mainClass>academy.devdojo.springboot2.Springboot2EssentialsApplication</mainClass>
+                    </container>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
